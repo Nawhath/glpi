@@ -1,12 +1,12 @@
-#On choisit une debian
+#On Use debian
 FROM debian:10.4
 
 MAINTAINER Nawhath "github@Nawhath"
 
-#Ne pas poser de question ? l'installation
+#Don't ask a question? installation
 ENV DEBIAN_FRONTEND noninteractive
 
-#Installation d'apache et de php7.3 avec extension
+#Installation apache , php7.3 and extension
 RUN apt update \
 && apt install --yes --no-install-recommends \
 apache2 \
@@ -31,10 +31,10 @@ ca-certificates \
 jq \
 && rm -rf /var/lib/apt/lists/*
 
-#Copie et execution du script pour l'installation et l'initialisation de GLPI
+#Copy script install glpi to container
 COPY glpi-start.sh /opt/
 RUN chmod +x /opt/glpi-start.sh
 ENTRYPOINT ["/opt/glpi-start.sh"]
 
-#Exposition des ports
+#Ports Expose
 EXPOSE 80 443
