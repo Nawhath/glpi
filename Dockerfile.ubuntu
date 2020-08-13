@@ -1,0 +1,42 @@
+#On Use ubuntu
+FROM ubuntu:20.04
+
+MAINTAINER Nawhath "github@Nawhath"
+
+#Don't ask a question? installation
+ENV DEBIAN_FRONTEND noninteractive
+ENV TZ=Asia/Bangkok
+
+#Installation apache , php7.4 and extension
+RUN apt update \
+&& apt install --yes --no-install-recommends \
+apache2 \
+php7.4 \
+php7.4-mysql \
+php7.4-ldap \
+php7.4-xmlrpc \
+php7.4-imap \
+curl \
+php7.4-curl \
+php7.4-gd \
+php7.4-mbstring \
+php7.4-xml \
+php7.4-apcu-bc \
+php-cas \
+php7.4-intl \
+php7.4-zip \
+php7.4-bz2 \
+cron \
+wget \
+ca-certificates \
+jq \
+inetutils-ping \
+&& rm -rf /var/lib/apt/lists/*
+
+#Copy script install glpi to container
+COPY glpi-start.sh /opt/
+RUN chmod +x /opt/glpi-start.sh
+ENTRYPOINT ["/opt/glpi-start.sh"]
+
+#Ports Expose
+EXPOSE 80 443
